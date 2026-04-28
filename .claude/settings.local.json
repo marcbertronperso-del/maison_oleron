@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/User/Documents/Projet_loc/bmap maison/_bmad-output/**)",
+      "Read(//c/Users/User/Documents/Projet_loc/bmap maison/_bmad/bmm/**)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(SKIP_ENV_VALIDATION=true npm run lint)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\User\\Documents\\Projet_loc\\bmap maison\\_bmad-output\\implementation-artifacts"
+    ]
+  }
+}
