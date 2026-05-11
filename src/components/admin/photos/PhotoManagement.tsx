@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Check, ExternalLink, GripVertical, ImagePlus, Loader2, Pencil, Trash2, X } from "lucide-react";
@@ -148,6 +148,9 @@ export function PhotoManagement({ initialPhotos }: { initialPhotos: PhotoRow[] }
   const [editAltText, setEditAltText] = useState("");
   const [isEditSaving, setIsEditSaving] = useState(false);
   const [editError, setEditError] = useState<string | null>(null);
+  const [newFile, setNewFile] = useState<File | null>(null);
+  const [newFilePreview, setNewFilePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setPhotos(initialPhotos);
@@ -259,12 +262,33 @@ export function PhotoManagement({ initialPhotos }: { initialPhotos: PhotoRow[] }
     setEditingPhoto(photo);
     setEditAltText(photo.alt_text);
     setEditError(null);
+    setNewFile(null);
+    setNewFilePreview(null);
   }
 
   function closeEditModal() {
     if (isEditSaving) return;
+    if (newFilePreview) URL.revokeObjectURL(newFilePreview);
     setEditingPhoto(null);
     setEditError(null);
+    setNewFile(null);
+    setNewFilePreview(null);
+  }
+
+  function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (newFilePreview) URL.revokeObjectURL(newFilePreview);
+    setNewFile(file);
+    setNewFilePreview(URL.createObjectURL(file));
+    setEditError(null);
+  }
+
+  function cancelNewFile() {
+    if (newFilePreview) URL.revokeObjectURL(newFilePreview);
+    setNewFile(null);
+    setNewFilePreview(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
   }
 
   async function handleEditSave() {
@@ -277,20 +301,45 @@ export function PhotoManagement({ initialPhotos }: { initialPhotos: PhotoRow[] }
     setIsEditSaving(true);
     setEditError(null);
     try {
-      const res = await fetch(`/api/admin/photos/${editingPhoto.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ alt_text: trimmed }),
-      });
-      if (!res.ok) {
-        setEditError("La modification a échoué. Veuillez réessayer.");
-        setIsEditSaving(false);
-        return;
+      let updatedBlobUrl = editingPhoto.blob_url;
+
+      if (newFile) {
+        const formData = new FormData();
+        formData.append("file", newFile);
+        formData.append("alt_text", trimmed);
+        const res = await fetch(`/api/admin/photos/${editingPhoto.id}`, {
+          method: "PATCH",
+          body: formData,
+        });
+        if (!res.ok) {
+          setEditError("La modification a échoué. Veuillez réessayer.");
+          setIsEditSaving(false);
+          return;
+        }
+        const data = await res.json() as { blob_url?: string };
+        updatedBlobUrl = data.blob_url ?? editingPhoto.blob_url;
+      } else {
+        const res = await fetch(`/api/admin/photos/${editingPhoto.id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ alt_text: trimmed }),
+        });
+        if (!res.ok) {
+          setEditError("La modification a échoué. Veuillez réessayer.");
+          setIsEditSaving(false);
+          return;
+        }
       }
+
       setPhotos((prev) =>
-        prev.map((p) => (p.id === editingPhoto.id ? { ...p, alt_text: trimmed } : p)),
+        prev.map((p) =>
+          p.id === editingPhoto.id ? { ...p, alt_text: trimmed, blob_url: updatedBlobUrl } : p,
+        ),
       );
+      if (newFilePreview) URL.revokeObjectURL(newFilePreview);
       setEditingPhoto(null);
+      setNewFile(null);
+      setNewFilePreview(null);
     } catch {
       setEditError("Erreur réseau. Veuillez réessayer.");
     } finally {
@@ -514,14 +563,53 @@ export function PhotoManagement({ initialPhotos }: { initialPhotos: PhotoRow[] }
               </button>
             </div>
 
+            {/* Photo preview — object URL for new file, next/image for existing */}
             <div className="relative mt-4 aspect-4/3 w-full overflow-hidden rounded-lg bg-muted">
-              <Image
-                src={editingPhoto.blob_url}
-                alt={editingPhoto.alt_text}
-                fill
-                sizes="400px"
-                className="object-cover"
+              {newFilePreview ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={newFilePreview}
+                  alt="Nouvelle photo"
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <Image
+                  src={editingPhoto.blob_url}
+                  alt={editingPhoto.alt_text}
+                  fill
+                  sizes="400px"
+                  className="object-cover"
+                />
+              )}
+            </div>
+
+            {/* File replacement */}
+            <div className="mt-3 flex items-center gap-2">
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/webp"
+                className="sr-only"
+                onChange={handleFileSelect}
               />
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={isEditSaving}
+                className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-muted disabled:opacity-50"
+              >
+                <ImagePlus className="h-3.5 w-3.5" />
+                {newFile ? newFile.name : "Remplacer la photo"}
+              </button>
+              {newFile && (
+                <button
+                  type="button"
+                  onClick={cancelNewFile}
+                  className="text-xs text-muted-foreground transition-colors hover:text-destructive"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              )}
             </div>
 
             <div className="mt-4">
