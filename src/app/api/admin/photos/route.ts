@@ -8,7 +8,7 @@ import { photos } from "~/server/db/schema";
 import { logAdminAction } from "~/lib/audit";
 import { auth } from "~/server/auth";
 
-const ALLOWED_TYPES = new Set(["image/jpeg", "image/webp"]);
+const ALLOWED_TYPES = new Set(["image/jpeg", "image/webp", "image/png"]);
 const MAX_BYTES = 10 * 1024 * 1024;
 
 export async function POST(req: NextRequest) {

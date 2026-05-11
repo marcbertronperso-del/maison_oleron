@@ -9,7 +9,7 @@ import { logAdminAction } from "~/lib/audit";
 import { auth } from "~/server/auth";
 
 const UUID_RE = /^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/i;
-const ALLOWED_TYPES = new Set(["image/jpeg", "image/webp"]);
+const ALLOWED_TYPES = new Set(["image/jpeg", "image/webp", "image/png"]);
 const MAX_BYTES = 10 * 1024 * 1024;
 
 export async function PATCH(

@@ -588,7 +588,7 @@ export function PhotoManagement({ initialPhotos }: { initialPhotos: PhotoRow[] }
               <input
                 ref={fileInputRef}
                 type="file"
-                accept="image/jpeg,image/webp"
+                accept=".jpg,.jpeg,.webp,.png,image/jpeg,image/webp,image/png"
                 className="sr-only"
                 onChange={handleFileSelect}
               />

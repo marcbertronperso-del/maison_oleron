@@ -12,7 +12,7 @@ type FileEntry = {
   errorMsg?: string;
 };
 
-const ALLOWED_TYPES = new Set(["image/jpeg", "image/webp"]);
+const ALLOWED_TYPES = new Set(["image/jpeg", "image/webp", "image/png"]);
 const MAX_BYTES = 10 * 1024 * 1024;
 const MAX_FILES = 10;
 
@@ -180,7 +180,7 @@ export function UploadModal({
                 Glissez vos photos ici
               </p>
               <p className="text-xs text-muted-foreground">
-                JPEG ou WebP · max 10 Mo · jusqu&apos;à{" "}
+                JPEG, PNG ou WebP · max 10 Mo · jusqu&apos;à{" "}
                 {MAX_FILES - entries.length} fichier
                 {MAX_FILES - entries.length > 1 ? "s" : ""}
               </p>
@@ -188,7 +188,7 @@ export function UploadModal({
                 ref={fileInputRef}
                 type="file"
                 multiple
-                accept=".jpg,.jpeg,.webp,image/jpeg,image/webp"
+                accept=".jpg,.jpeg,.webp,.png,image/jpeg,image/webp,image/png"
                 className="hidden"
                 onChange={(e) => {
                   if (e.target.files) addFiles(e.target.files);
