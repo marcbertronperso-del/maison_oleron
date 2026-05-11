@@ -32,7 +32,7 @@ export default async function AuditPage({
   const page = Math.max(1, parseInt(pageParam ?? "1", 10) || 1);
   const offset = (page - 1) * PAGE_SIZE;
 
-  const [[{ total }], logs] = await Promise.all([
+  const [countRows, logs] = await Promise.all([
     db.select({ total: count() }).from(adminAuditLogs),
     db
       .select()
@@ -42,6 +42,7 @@ export default async function AuditPage({
       .offset(offset),
   ]);
 
+  const total = countRows[0]?.total ?? 0;
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
   return (
