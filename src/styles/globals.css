@@ -149,4 +149,8 @@
   html {
     @apply font-sans;
   }
+  :focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
+  }
 }

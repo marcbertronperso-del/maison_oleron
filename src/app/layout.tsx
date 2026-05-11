@@ -4,7 +4,8 @@ import { type Metadata } from "next";
 import { DM_Serif_Display, Inter } from "next/font/google";
 
 export const metadata: Metadata = {
-  title: "Maison Oléron",
+  metadataBase: new URL("https://maison-oleron.fr"),
+  title: { default: "Maison Oléron", template: "%s — Maison Oléron" },
   description: "Location de vacances à Saint-Denis-d'Oléron",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };

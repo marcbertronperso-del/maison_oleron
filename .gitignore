@@ -16,6 +16,9 @@ db.sqlite
 # next.js
 /.next/
 /out/
+
+# local dev uploads (mock blob storage)
+/public/uploads/
 next-env.d.ts
 
 # production

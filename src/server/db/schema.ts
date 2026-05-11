@@ -12,7 +12,6 @@ import {
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
-import { type AdapterAccount } from "next-auth/adapters";
 
 export const createTable = pgTableCreator((name) => `maison-oleron_${name}`);
 
@@ -154,7 +153,7 @@ export const accounts = createTable(
       .references(() => users.id),
     type: d
       .varchar({ length: 255 })
-      .$type<AdapterAccount["type"]>()
+      .$type<"oauth" | "oidc" | "email" | "webauthn">()
       .notNull(),
     provider: d.varchar({ length: 255 }).notNull(),
     providerAccountId: d.varchar({ length: 255 }).notNull(),

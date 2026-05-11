@@ -5,10 +5,21 @@
       "Read(//c/Users/User/Documents/Projet_loc/bmap maison/_bmad/bmm/**)",
       "Bash(npm install *)",
       "Bash(npm run *)",
-      "Bash(SKIP_ENV_VALIDATION=true npm run lint)"
+      "Bash(SKIP_ENV_VALIDATION=true npm run lint)",
+      "Bash(node -e \"require\\('react-hook-form'\\); console.log\\('ok'\\)\")",
+      "Bash(node -e \"require\\('@hookform/resolvers'\\); console.log\\('ok'\\)\")",
+      "Bash(node -e \"const s = require\\('stripe'\\); console.log\\(s.LATEST_API_VERSION\\)\")",
+      "Bash(node -e \"const Stripe = require\\('stripe'\\); const s = new Stripe\\('sk_test_x'\\); console.log\\(s.LAST_REQUEST?.version ?? 'n/a'\\)\")",
+      "Bash(npm list *)",
+      "Bash(node -e \"const b = require\\('bcryptjs'\\); b.hash\\('npg_hQFi81JfsGwy', 12\\).then\\(console.log\\)\")",
+      "Bash(node -e \"console.log\\(require\\('c:/Users/User/Documents/Projet_loc/maison-oleron/node_modules/next/package.json'\\).version\\)\")"
     ],
     "additionalDirectories": [
-      "c:\\Users\\User\\Documents\\Projet_loc\\bmap maison\\_bmad-output\\implementation-artifacts"
+      "c:\\Users\\User\\Documents\\Projet_loc\\bmap maison\\_bmad-output\\implementation-artifacts",
+      "c:\\Users\\User\\Documents\\Projet_loc\\maison-oleron\\src\\app\\(public)\\reserver",
+      "c:\\Users\\User\\Documents\\Projet_loc\\maison-oleron\\src\\app\\(public)\\reserver\\[slotHoldId]",
+      "c:\\Users\\User\\Documents\\Projet_loc\\maison-oleron\\src\\app\\admin\\reservations",
+      "c:\\Users\\User\\Documents\\Projet_loc\\maison-oleron\\src\\app\\api\\admin\\photos"
     ]
   }
 }
