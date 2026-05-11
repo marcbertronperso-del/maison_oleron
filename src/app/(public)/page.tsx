@@ -22,38 +22,79 @@ import { DisponibilitesSection } from "~/components/booking/DisponibilitesSectio
 import { ContactForm } from "~/components/contact/ContactForm";
 
 const DESCRIPTION =
-  "Maison familiale 9 personnes à 200 m de la plage de Saint-Denis-d'Oléron. Jardin 1 000 m², 4 chambres, terrasse, barbecue. Réservation en ligne.";
+  "Location saisonnière rue d'Antiochas, Saint-Denis-d'Oléron. Maison 9 personnes, 4 chambres, jardin 1 000 m², à 200 m de la plage. Réservez en ligne.";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Location Maison Oléron — Saint-Denis-d'Oléron, Île d'Oléron",
+    absolute: "Location Vacances Saint-Denis-d'Oléron — Maison Antiochas 9 personnes",
   },
   description: DESCRIPTION,
+  keywords: [
+    "location vacances",
+    "location saisonnière",
+    "Saint-Denis-d'Oléron",
+    "île d'Oléron",
+    "Oléron",
+    "Antiochas",
+    "maison 9 personnes",
+    "location maison",
+    "vacances Oléron",
+    "location bord de mer",
+  ],
   openGraph: {
-    title: "Location Maison Oléron — Saint-Denis-d'Oléron, Île d'Oléron",
+    title: "Location Vacances Saint-Denis-d'Oléron — Maison Antiochas 9 personnes",
     description: DESCRIPTION,
-    images: ["/hero.png"],
+    url: "https://www.maloloantiochas.fr",
+    siteName: "Maison Antiochas — Saint-Denis-d'Oléron",
+    images: [
+      {
+        url: "https://www.maloloantiochas.fr/hero.png",
+        width: 1200,
+        height: 630,
+        alt: "Maison Antiochas — Location vacances à Saint-Denis-d'Oléron",
+      },
+    ],
+    locale: "fr_FR",
+    type: "website",
   },
 };
 
 const JSON_LD = {
   "@context": "https://schema.org",
   "@type": ["LodgingBusiness", "Accommodation"],
-  name: "Maison Oléron",
+  name: "Maison Antiochas — Location Vacances Saint-Denis-d'Oléron",
+  alternateName: "Maison Oléron",
   url: "https://www.maloloantiochas.fr",
+  description:
+    "Location saisonnière 9 personnes à Saint-Denis-d'Oléron (île d'Oléron), rue d'Antiochas, à 200 m de la plage. 4 chambres, jardin 1 000 m², terrasse, barbecue, Wi-Fi.",
+  email: "contact@maloloantiochas.fr",
   address: {
     "@type": "PostalAddress",
     streetAddress: "29 rue d'Antiochas",
     addressLocality: "Saint-Denis-d'Oléron",
     postalCode: "17650",
+    addressRegion: "Charente-Maritime",
     addressCountry: "FR",
   },
-  occupancy: {
-    "@type": "QuantitativeValue",
-    maxValue: 9,
-  },
+  accommodationType: "VacationRental",
+  checkinTime: "16:00",
+  checkoutTime: "10:00",
+  occupancy: { "@type": "QuantitativeValue", maxValue: 9 },
   numberOfRooms: 4,
+  numberOfBedrooms: 4,
+  numberOfBathroomsTotal: 2,
+  floorSize: { "@type": "QuantitativeValue", value: 120, unitCode: "MTK" },
+  petsAllowed: false,
   priceRange: "€€",
+  amenityFeature: [
+    { "@type": "LocationFeatureSpecification", name: "Wi-Fi", value: true },
+    { "@type": "LocationFeatureSpecification", name: "Parking privé", value: true },
+    { "@type": "LocationFeatureSpecification", name: "Barbecue", value: true },
+    { "@type": "LocationFeatureSpecification", name: "Jardin clos", value: true },
+    { "@type": "LocationFeatureSpecification", name: "Terrasse", value: true },
+    { "@type": "LocationFeatureSpecification", name: "Cuisine équipée", value: true },
+    { "@type": "LocationFeatureSpecification", name: "Télévision", value: true },
+  ],
 };
 
 const PROPERTY_FEATURES = [
@@ -154,10 +195,12 @@ export default async function HomePage() {
             La Maison
           </h2>
           <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-            Grande maison familiale au cœur de Saint-Denis-d&apos;Oléron, à deux
-            pas de la plage et du port. Un cadre idéal pour des vacances en
-            famille ou entre amis, avec une annexe indépendante pour plus
-            d&apos;intimité.
+            Cette <strong className="font-medium text-foreground">location saisonnière</strong> est
+            située <strong className="font-medium text-foreground">rue d&apos;Antiochas</strong>,
+            au cœur de Saint-Denis-d&apos;Oléron, à deux pas de la plage et du port.
+            Un cadre idéal pour des vacances en famille ou entre amis sur
+            l&apos;<strong className="font-medium text-foreground">île d&apos;Oléron</strong>,
+            avec une annexe indépendante pour plus d&apos;intimité.
           </p>
 
           <ul

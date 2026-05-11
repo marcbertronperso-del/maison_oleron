@@ -5,8 +5,8 @@ import { DM_Serif_Display, Inter } from "next/font/google";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.maloloantiochas.fr"),
-  title: { default: "Maison Oléron", template: "%s — Maison Oléron" },
-  description: "Location de vacances à Saint-Denis-d'Oléron",
+  title: { default: "Maison Antiochas — Location Vacances Saint-Denis-d'Oléron", template: "%s — Maison Antiochas" },
+  description: "Location saisonnière à Saint-Denis-d'Oléron, rue d'Antiochas. Maison 9 personnes, 4 chambres, jardin 1 000 m², 200 m de la plage.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
