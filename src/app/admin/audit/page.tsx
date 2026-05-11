@@ -48,7 +48,7 @@ export default async function AuditPage({
   return (
     <div className="mx-auto max-w-3xl space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="font-heading text-xl text-foreground">Journal d'audit</h1>
+        <h1 className="font-heading text-xl text-foreground">Journal d&apos;audit</h1>
         <span className="text-sm text-muted-foreground">
           {total} entrée{total !== 1 ? "s" : ""}
         </span>

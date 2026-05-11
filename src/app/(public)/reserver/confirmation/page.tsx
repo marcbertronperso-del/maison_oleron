@@ -32,7 +32,7 @@ export default function ConfirmationPage() {
 
         <p className="mt-4 text-lg text-muted-foreground">
           Vous allez recevoir un email récapitulatif avec le détail de votre séjour
-          et le montant de l'acompte à régler.
+          et le montant de l&apos;acompte à régler.
         </p>
 
         <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50 px-6 py-4 text-left">
@@ -40,20 +40,20 @@ export default function ConfirmationPage() {
             ⚠ Confirmez votre réservation dans les 48 heures
           </p>
           <p className="mt-1 text-sm text-amber-700">
-            Sans versement de l'acompte dans ce délai, le créneau sera
+            Sans versement de l&apos;acompte dans ce délai, le créneau sera
             automatiquement libéré.
           </p>
         </div>
 
         <p className="mt-6 text-sm text-muted-foreground">
-          Pour toute question, répondez directement à l'email que vous avez reçu.
+          Pour toute question, répondez directement à l&apos;email que vous avez reçu.
         </p>
 
         <Link
           href="/"
           className="mt-8 inline-block rounded-md bg-primary px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
         >
-          Retour à l'accueil
+          Retour à l&apos;accueil
         </Link>
       </div>
     </main>

@@ -7,8 +7,6 @@ import { env } from "~/env";
 
 const ADDRESS = "29 rue d'Antiochas, 17650 Saint-Denis-d'Oléron";
 const ADDRESS_ENCODED = encodeURIComponent(ADDRESS);
-const GPS_LAT = 46.0279;
-const GPS_LNG = -1.3676;
 const GOOGLE_MAPS_URL = `https://www.google.com/maps/search/?api=1&query=${ADDRESS_ENCODED}`;
 
 type MapType = "roadmap" | "satellite";

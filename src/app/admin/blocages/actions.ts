@@ -22,7 +22,7 @@ export async function createBlock(formData: FormData) {
   const parsed = CreateBlockSchema.safeParse({
     startDate: formData.get("startDate"),
     endDate: formData.get("endDate"),
-    reason: formData.get("reason") || undefined,
+    reason: formData.get("reason") ?? undefined,
   });
 
   if (!parsed.success) {
