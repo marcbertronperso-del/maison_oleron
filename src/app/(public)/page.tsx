@@ -40,7 +40,7 @@ const JSON_LD = {
   "@context": "https://schema.org",
   "@type": ["LodgingBusiness", "Accommodation"],
   name: "Maison Oléron",
-  url: "https://maison-oleron.fr",
+  url: "https://www.maloloantiochas.fr",
   address: {
     "@type": "PostalAddress",
     streetAddress: "29 rue d'Antiochas",

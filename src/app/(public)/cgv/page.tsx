@@ -156,10 +156,10 @@ export default function CgvPage() {
         <p className="border-t pt-8 text-xs text-muted-foreground">
           Pour toute question relative aux présentes CGV, contactez-nous à{" "}
           <a
-            href="mailto:contact@maison-oleron.fr"
+            href="mailto:contact@maloloantiochas.fr"
             className="text-primary hover:underline"
           >
-            contact@maison-oleron.fr
+            contact@maloloantiochas.fr
           </a>
           .
         </p>

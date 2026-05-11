@@ -31,10 +31,10 @@ export function Footer() {
               Politique de confidentialité
             </Link>
             <a
-              href="mailto:contact@maison-oleron.fr"
+              href="mailto:contact@maloloantiochas.fr"
               className="text-white/70 transition-colors hover:text-white"
             >
-              contact@maison-oleron.fr
+              contact@maloloantiochas.fr
             </a>
           </nav>
         </div>

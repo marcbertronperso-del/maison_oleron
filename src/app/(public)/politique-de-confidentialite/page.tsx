@@ -31,10 +31,10 @@ export default function PolitiqueDeConfidentialitePage() {
             ce site est le propriétaire de la Maison Oléron
             (contact&nbsp;:{" "}
             <a
-              href="mailto:contact@maison-oleron.fr"
+              href="mailto:contact@maloloantiochas.fr"
               className="text-primary hover:underline"
             >
-              contact@maison-oleron.fr
+              contact@maloloantiochas.fr
             </a>
             ).
           </p>
@@ -136,10 +136,10 @@ export default function PolitiqueDeConfidentialitePage() {
           <p className="mt-4 leading-relaxed text-muted-foreground">
             Pour exercer ces droits, adressez votre demande par e-mail à{" "}
             <a
-              href="mailto:contact@maison-oleron.fr"
+              href="mailto:contact@maloloantiochas.fr"
               className="text-primary hover:underline"
             >
-              contact@maison-oleron.fr
+              contact@maloloantiochas.fr
             </a>
             . Vous disposez également du droit d&apos;introduire une
             réclamation auprès de la{" "}

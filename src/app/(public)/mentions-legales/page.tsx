@@ -49,10 +49,10 @@ export default function MentionsLegalesPage() {
               </dt>
               <dd className="inline">
                 <a
-                  href="mailto:contact@maison-oleron.fr"
+                  href="mailto:contact@maloloantiochas.fr"
                   className="text-primary hover:underline"
                 >
-                  contact@maison-oleron.fr
+                  contact@maloloantiochas.fr
                 </a>
               </dd>
             </div>
