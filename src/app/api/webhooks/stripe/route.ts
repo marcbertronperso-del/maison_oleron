@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
 
   try {
     if (event.type === "payment_intent.succeeded") {
-      const intent = event.data.object as Stripe.PaymentIntent;
+      const intent = event.data.object;
       const bookingId = intent.metadata.bookingId;
       const slotHoldId = intent.metadata.slotHoldId;
 
