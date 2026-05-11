@@ -220,7 +220,7 @@ interface PayPalSectionProps {
   depositCents: number;
 }
 
-function PayPalSection({ slotHoldId, paypalClientId, depositCents }: PayPalSectionProps) {
+function PayPalSection({ slotHoldId, paypalClientId, depositCents: _depositCents }: PayPalSectionProps) {
   const router = useRouter();
   const [paypalError, setPaypalError] = useState<string | null>(null);
 

@@ -180,7 +180,7 @@ export function UploadModal({
                 Glissez vos photos ici
               </p>
               <p className="text-xs text-muted-foreground">
-                JPEG ou WebP · max 10 Mo · jusqu'à{" "}
+                JPEG ou WebP · max 10 Mo · jusqu&apos;à{" "}
                 {MAX_FILES - entries.length} fichier
                 {MAX_FILES - entries.length > 1 ? "s" : ""}
               </p>

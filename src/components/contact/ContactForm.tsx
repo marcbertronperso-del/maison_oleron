@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 
 type Field = "nom" | "prenom" | "email" | "telephone" | "message" | "captchaAnswer";
@@ -33,8 +33,6 @@ export function ContactForm() {
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({});
   const [captcha, setCaptcha] = useState<CaptchaChallenge | null>(null);
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
-  const firstErrorRef = useRef<HTMLElement | null>(null);
-
   useEffect(() => {
     void fetchCaptcha();
   }, []);

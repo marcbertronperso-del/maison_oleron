@@ -1,16 +1,11 @@
 import { relations } from "drizzle-orm";
 import {
-  boolean,
   date,
   index,
-  integer,
   jsonb,
   pgEnum,
   pgTableCreator,
   primaryKey,
-  text,
-  timestamp,
-  varchar,
 } from "drizzle-orm/pg-core";
 
 export const createTable = pgTableCreator((name) => `maison-oleron_${name}`);
