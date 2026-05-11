@@ -138,7 +138,7 @@ export default function CgvPage() {
             <li>
               La capacité maximale d&apos;accueil est de
               <strong className="font-semibold text-foreground">
-                {" "}9&nbsp;personnes
+                {" "}7&nbsp;personnes
               </strong>
               . Tout dépassement est strictement interdit.
             </li>

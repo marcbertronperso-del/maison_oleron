@@ -22,11 +22,11 @@ import { DisponibilitesSection } from "~/components/booking/DisponibilitesSectio
 import { ContactForm } from "~/components/contact/ContactForm";
 
 const DESCRIPTION =
-  "Location saisonnière rue d'Antiochas, Saint-Denis-d'Oléron. Maison 9 personnes, 4 chambres, jardin 1 000 m², à 200 m de la plage. Réservez en ligne.";
+  "Location saisonnière rue d'Antiochas, Saint-Denis-d'Oléron. Maison 7 personnes, 4 chambres, jardin 1 000 m², à 200 m de la plage. Réservez en ligne.";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Location Vacances Saint-Denis-d'Oléron — Maison Antiochas 9 personnes",
+    absolute: "Location Vacances Saint-Denis-d'Oléron — Maison Antiochas 7 personnes",
   },
   description: DESCRIPTION,
   keywords: [
@@ -36,13 +36,13 @@ export const metadata: Metadata = {
     "île d'Oléron",
     "Oléron",
     "Antiochas",
-    "maison 9 personnes",
+    "maison 7 personnes",
     "location maison",
     "vacances Oléron",
     "location bord de mer",
   ],
   openGraph: {
-    title: "Location Vacances Saint-Denis-d'Oléron — Maison Antiochas 9 personnes",
+    title: "Location Vacances Saint-Denis-d'Oléron — Maison Antiochas 7 personnes",
     description: DESCRIPTION,
     url: "https://www.maloloantiochas.fr",
     siteName: "Maison Antiochas — Saint-Denis-d'Oléron",
@@ -66,7 +66,7 @@ const JSON_LD = {
   alternateName: "Maison Oléron",
   url: "https://www.maloloantiochas.fr",
   description:
-    "Location saisonnière 9 personnes à Saint-Denis-d'Oléron (île d'Oléron), rue d'Antiochas, à 200 m de la plage. 4 chambres, jardin 1 000 m², terrasse, barbecue, Wi-Fi.",
+    "Location saisonnière 7 personnes à Saint-Denis-d'Oléron (île d'Oléron), rue d'Antiochas, à 200 m de la plage. 4 chambres, jardin 1 000 m², terrasse, barbecue, Wi-Fi.",
   email: "contact@maloloantiochas.fr",
   address: {
     "@type": "PostalAddress",
@@ -79,7 +79,7 @@ const JSON_LD = {
   accommodationType: "VacationRental",
   checkinTime: "16:00",
   checkoutTime: "10:00",
-  occupancy: { "@type": "QuantitativeValue", maxValue: 9 },
+  occupancy: { "@type": "QuantitativeValue", maxValue: 7 },
   numberOfRooms: 4,
   numberOfBedrooms: 4,
   numberOfBathroomsTotal: 2,
@@ -98,7 +98,7 @@ const JSON_LD = {
 };
 
 const PROPERTY_FEATURES = [
-  { icon: Users, label: "9 personnes" },
+  { icon: Users, label: "7 personnes" },
   { icon: Bed, label: "3 chambres — maison principale" },
   { icon: Home, label: "1 chambre — annexe avec salle de bain privée" },
   { icon: TreePine, label: "Jardin 1 000 m²" },
@@ -195,12 +195,19 @@ export default async function HomePage() {
             La Maison
           </h2>
           <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-            Cette <strong className="font-medium text-foreground">location saisonnière</strong> est
-            située <strong className="font-medium text-foreground">rue d&apos;Antiochas</strong>,
-            au cœur de Saint-Denis-d&apos;Oléron, à deux pas de la plage et du port.
-            Un cadre idéal pour des vacances en famille ou entre amis sur
-            l&apos;<strong className="font-medium text-foreground">île d&apos;Oléron</strong>,
-            avec une annexe indépendante pour plus d&apos;intimité.
+            Maison de plain-pied entièrement rénovée, située sur un terrain clos et arboré de
+            1&nbsp;000&nbsp;m². Elle comprend deux grandes chambres ainsi qu&apos;une troisième
+            chambre plus petite équipée d&apos;un lit simple, une salle d&apos;eau, des WC
+            indépendants, et un vaste salon de 35&nbsp;m² ouvert sur une cuisine entièrement
+            équipée. Une <strong className="font-medium text-foreground">dépendance</strong>{" "}
+            complète le bien avec une belle chambre indépendante et sa salle d&apos;eau avec WC,
+            idéale pour recevoir famille ou amis en toute tranquillité. Le jardin paysager invite
+            à la détente avec bains de soleil, table extérieure et barbecue pour profiter
+            pleinement des beaux jours. La maison bénéficie d&apos;un emplacement privilégié :
+            le marché et la{" "}
+            <strong className="font-medium text-foreground">plage de la Boirie</strong> sont
+            accessibles à pied en seulement 5&nbsp;minutes. La plage du camping se situe à deux
+            pas, avec un accès direct depuis la maison.
           </p>
 
           <ul
