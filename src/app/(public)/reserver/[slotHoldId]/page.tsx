@@ -102,7 +102,7 @@ export default async function ReserverRecapPage({
     arrival_date: arrivalDate,
     departure_date: departureDate,
     expires_at: expiresAt,
-  } = hold!;
+  } = hold;
 
   const nights = countNights(arrivalDate, departureDate);
   const pricePerNight = getPricePerNight(arrivalDate);
