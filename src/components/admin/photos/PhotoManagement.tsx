@@ -312,7 +312,8 @@ export function PhotoManagement({ initialPhotos }: { initialPhotos: PhotoRow[] }
         body: formData,
       });
       if (!res.ok) {
-        setEditError("La modification a échoué. Veuillez réessayer.");
+        const errData = await res.json().catch(() => ({})) as { error?: string; detail?: string };
+        setEditError(`Erreur : ${errData.error ?? "inconnue"}${errData.detail ? ` — ${errData.detail}` : ""}`);
         setIsEditSaving(false);
         return;
       }
