@@ -24,10 +24,10 @@ export default async function PaiementPage({
     redirect("/#disponibilites");
   }
 
-  const nights = countNights(hold!.arrival_date, hold!.departure_date);
-  const pricePerNight = getPricePerNight(hold!.arrival_date);
+  const nights = countNights(hold.arrival_date, hold.departure_date);
+  const pricePerNight = getPricePerNight(hold.arrival_date);
   const subtotal = nights * pricePerNight;
-  const discountRate = getDiscountRate(hold!.arrival_date, hold!.departure_date);
+  const discountRate = getDiscountRate(hold.arrival_date, hold.departure_date);
   const discountAmount = Math.round(subtotal * discountRate);
   const total = subtotal - discountAmount;
   const totalCents = total * 100;
@@ -36,9 +36,9 @@ export default async function PaiementPage({
   return (
     <TunnelPaiementForm
       slotHoldId={slotHoldId}
-      arrivalDate={hold!.arrival_date}
-      departureDate={hold!.departure_date}
-      expiresAt={hold!.expires_at.toISOString()}
+      arrivalDate={hold.arrival_date}
+      departureDate={hold.departure_date}
+      expiresAt={hold.expires_at.toISOString()}
       depositCents={depositCents}
       paypalClientId={env.PAYPAL_CLIENT_ID}
     />
