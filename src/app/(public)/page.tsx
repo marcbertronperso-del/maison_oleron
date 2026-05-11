@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Location Maison Oléron — Saint-Denis-d'Oléron, Île d'Oléron",
     description: DESCRIPTION,
-    images: ["/hero.jpg"],
+    images: ["/hero.png"],
   },
 };
 
@@ -66,18 +66,16 @@ const PROPERTY_FEATURES = [
 ] as const;
 
 const STATIC_PHOTOS = [
-  { src: "/photos/salon.jpg", alt: "Salon lumineux avec canapé" },
-  { src: "/photos/cuisine.jpg", alt: "Cuisine entièrement équipée" },
-  { src: "/photos/chambre-principale.jpg", alt: "Chambre principale avec lit double" },
-  { src: "/photos/chambre-2.jpg", alt: "Chambre avec deux lits simples" },
-  { src: "/photos/chambre-3.jpg", alt: "Chambre double vue jardin" },
-  { src: "/photos/chambre-annexe.jpg", alt: "Chambre de l'annexe avec salle de bain privée" },
-  { src: "/photos/salle-de-bain.jpg", alt: "Salle de bain principale" },
-  { src: "/photos/jardin.jpg", alt: "Jardin de 1 000 m² clos" },
-  { src: "/photos/terrasse.jpg", alt: "Terrasse avec salon de jardin et barbecue" },
-  { src: "/photos/exterieur.jpg", alt: "Vue extérieure de la maison" },
-  { src: "/photos/annexe.jpg", alt: "Annexe indépendante" },
-  { src: "/photos/plage.jpg", alt: "La plage à 200 m de la maison" },
+  { src: "/salon 1.jpg", alt: "Salon — vue 1" },
+  { src: "/salon 2.jpg", alt: "Salon — vue 2" },
+  { src: "/cuisine 1.jpg", alt: "Cuisine — vue 1" },
+  { src: "/cuisine 2.jpg", alt: "Cuisine — vue 2" },
+  { src: "/maison face 1.jpg", alt: "Façade de la maison — vue 1" },
+  { src: "/maison face 2.jpg", alt: "Façade de la maison — vue 2" },
+  { src: "/jardin.jpg", alt: "Jardin de 1 000 m²" },
+  { src: "/jardin 2.jpg", alt: "Jardin — vue 2" },
+  { src: "/salle d eau.jpg", alt: "Salle d'eau" },
+  { src: "/salle d eau 2.jpg", alt: "Salle d'eau — vue 2" },
 ] as const;
 
 const AMENITIES = [
@@ -97,7 +95,9 @@ export default async function HomePage() {
     .where(eq(photosTable.is_active, true))
     .orderBy(asc(photosTable.display_order));
 
-  const galleryPhotos = dbPhotos.length > 0 ? dbPhotos : STATIC_PHOTOS;
+  // Filter out local /uploads/ paths that only exist in dev (gitignored)
+  const validDbPhotos = dbPhotos.filter((p) => !p.src.startsWith("/uploads/"));
+  const galleryPhotos = validDbPhotos.length > 0 ? validDbPhotos : STATIC_PHOTOS;
 
   return (
     <>
@@ -112,7 +112,7 @@ export default async function HomePage() {
         className="relative flex h-[90vh] min-h-150 items-end bg-foreground"
       >
         <Image
-          src="/hero.jpg"
+          src="/hero.png"
           alt="Vue extérieure de la Maison Oléron, Saint-Denis-d'Oléron"
           fill
           priority
