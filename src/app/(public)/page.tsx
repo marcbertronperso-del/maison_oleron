@@ -194,36 +194,40 @@ export default async function HomePage() {
           >
             La Maison
           </h2>
-          <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-            Maison de plain-pied entièrement rénovée, située sur un terrain clos et arboré de
-            1&nbsp;000&nbsp;m². Elle comprend deux grandes chambres ainsi qu&apos;une troisième
-            chambre plus petite équipée d&apos;un lit simple, une salle d&apos;eau, des WC
-            indépendants, et un vaste salon de 35&nbsp;m² ouvert sur une cuisine entièrement
-            équipée. Une <strong className="font-medium text-foreground">dépendance</strong>{" "}
-            complète le bien avec une belle chambre indépendante et sa salle d&apos;eau avec WC,
-            idéale pour recevoir famille ou amis en toute tranquillité. Le jardin paysager invite
-            à la détente avec bains de soleil, table extérieure et barbecue pour profiter
-            pleinement des beaux jours. La maison bénéficie d&apos;un emplacement privilégié :
-            le marché et la{" "}
-            <strong className="font-medium text-foreground">plage de la Boirie</strong> sont
-            accessibles à pied en seulement 5&nbsp;minutes. La plage du camping se situe à deux
-            pas, avec un accès direct depuis la maison.
-          </p>
+          <div className="mt-10 grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+            <div className="space-y-5 text-base leading-relaxed text-muted-foreground sm:text-lg">
+              <p>
+                Maison de plain-pied entièrement rénovée, située sur un terrain clos et arboré
+                de 1&nbsp;000&nbsp;m². Elle comprend deux grandes chambres ainsi qu&apos;une
+                troisième chambre plus petite équipée d&apos;un lit simple, une salle d&apos;eau,
+                des WC indépendants, et un vaste salon de 35&nbsp;m² ouvert sur une cuisine
+                entièrement équipée.
+              </p>
+              <p>
+                Une <strong className="font-medium text-foreground">dépendance</strong> complète
+                le bien avec une belle chambre indépendante et sa salle d&apos;eau avec WC —
+                idéale pour recevoir famille ou amis en toute tranquillité.
+              </p>
+              <p>
+                Le jardin paysager invite à la détente avec bains de soleil, table extérieure et
+                barbecue. La maison bénéficie d&apos;un emplacement privilégié : le marché et la{" "}
+                <strong className="font-medium text-foreground">plage de la Boirie</strong> sont
+                accessibles à pied en 5&nbsp;minutes, et la plage du camping est à deux pas avec
+                un accès direct depuis la maison.
+              </p>
+            </div>
 
-          <ul
-            role="list"
-            className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
-          >
-            {PROPERTY_FEATURES.map(({ icon: Icon, label }) => (
-              <li key={label} className="flex items-start gap-3">
-                <Icon
-                  className="mt-0.5 h-5 w-5 shrink-0 text-primary"
-                  aria-hidden="true"
-                />
-                <span className="text-foreground">{label}</span>
-              </li>
-            ))}
-          </ul>
+            <ul role="list" className="space-y-4">
+              {PROPERTY_FEATURES.map(({ icon: Icon, label }) => (
+                <li key={label} className="flex items-center gap-3">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                    <Icon className="h-5 w-5 text-primary" aria-hidden="true" />
+                  </span>
+                  <span className="text-foreground">{label}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 
