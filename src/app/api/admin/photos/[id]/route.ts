@@ -26,61 +26,55 @@ export async function PATCH(
     return NextResponse.json({ error: "INVALID_ID" }, { status: 400 });
   }
 
-  const contentType = req.headers.get("content-type") ?? "";
-  let altText: string;
+  // Always parse as FormData — file field is optional (absent = caption-only update)
+  let formData: FormData;
+  try {
+    formData = await req.formData();
+  } catch {
+    return NextResponse.json({ error: "INVALID_BODY" }, { status: 400 });
+  }
+
+  const rawAlt = formData.get("alt_text");
+  const altText = typeof rawAlt === "string" ? rawAlt.trim() : "";
+  if (!altText || altText.length > 255) {
+    return NextResponse.json({ error: "INVALID_ALT_TEXT" }, { status: 400 });
+  }
+
   let newBlobUrl: string | undefined;
 
-  if (contentType.includes("multipart/form-data")) {
-    const formData = await req.formData();
-    const rawAlt = formData.get("alt_text");
-    altText = typeof rawAlt === "string" ? rawAlt.trim() : "";
-    if (!altText || altText.length > 255) {
-      return NextResponse.json({ error: "INVALID_ALT_TEXT" }, { status: 400 });
+  const file = formData.get("file");
+  if (file instanceof File && file.size > 0) {
+    if (!ALLOWED_TYPES.has(file.type) || file.size > MAX_BYTES) {
+      return NextResponse.json({ error: "INVALID_FILE" }, { status: 400 });
     }
 
-    const file = formData.get("file");
-    if (file instanceof File && file.size > 0) {
-      if (!ALLOWED_TYPES.has(file.type) || file.size > MAX_BYTES) {
-        return NextResponse.json({ error: "INVALID_FILE" }, { status: 400 });
-      }
+    const [oldPhoto] = await db
+      .select({ blob_url: photos.blob_url })
+      .from(photos)
+      .where(eq(photos.id, id))
+      .limit(1);
 
-      // Fetch old URL for deletion
-      const [oldPhoto] = await db
-        .select({ blob_url: photos.blob_url })
-        .from(photos)
-        .where(eq(photos.id, id))
-        .limit(1);
+    const isDevMock =
+      !process.env.BLOB_READ_WRITE_TOKEN ||
+      process.env.BLOB_READ_WRITE_TOKEN === "placeholder";
 
-      // Upload new file
-      const isDevMock =
-        !process.env.BLOB_READ_WRITE_TOKEN ||
-        process.env.BLOB_READ_WRITE_TOKEN === "placeholder";
-
-      if (isDevMock) {
-        const uploadsDir = path.join(process.cwd(), "public", "uploads");
-        await fs.mkdir(uploadsDir, { recursive: true });
-        const filename = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
-        await fs.writeFile(path.join(uploadsDir, filename), Buffer.from(await file.arrayBuffer()));
-        newBlobUrl = `/uploads/${filename}`;
-      } else {
-        try {
-          const blob = await put(file.name, file, { access: "public" });
-          newBlobUrl = blob.url;
-        } catch (err) {
-          return NextResponse.json({ error: "BLOB_FAILED", detail: String(err) }, { status: 500 });
-        }
-      }
-
-      // Delete old blob
-      if (oldPhoto?.blob_url.startsWith("https://")) {
-        try { await del(oldPhoto.blob_url); } catch { /* ignore */ }
+    if (isDevMock) {
+      const uploadsDir = path.join(process.cwd(), "public", "uploads");
+      await fs.mkdir(uploadsDir, { recursive: true });
+      const filename = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
+      await fs.writeFile(path.join(uploadsDir, filename), Buffer.from(await file.arrayBuffer()));
+      newBlobUrl = `/uploads/${filename}`;
+    } else {
+      try {
+        const blob = await put(file.name, file, { access: "public" });
+        newBlobUrl = blob.url;
+      } catch (err) {
+        return NextResponse.json({ error: "BLOB_FAILED", detail: String(err) }, { status: 500 });
       }
     }
-  } else {
-    const { alt_text } = (await req.json()) as { alt_text?: string };
-    altText = alt_text?.trim() ?? "";
-    if (!altText || altText.length > 255) {
-      return NextResponse.json({ error: "INVALID_ALT_TEXT" }, { status: 400 });
+
+    if (oldPhoto?.blob_url.startsWith("https://")) {
+      try { await del(oldPhoto.blob_url); } catch { /* ignore */ }
     }
   }
 

@@ -303,32 +303,22 @@ export function PhotoManagement({ initialPhotos }: { initialPhotos: PhotoRow[] }
     try {
       let updatedBlobUrl = editingPhoto.blob_url;
 
+      const formData = new FormData();
+      formData.append("alt_text", trimmed);
+      if (newFile) formData.append("file", newFile);
+
+      const res = await fetch(`/api/admin/photos/${editingPhoto.id}`, {
+        method: "PATCH",
+        body: formData,
+      });
+      if (!res.ok) {
+        setEditError("La modification a échoué. Veuillez réessayer.");
+        setIsEditSaving(false);
+        return;
+      }
       if (newFile) {
-        const formData = new FormData();
-        formData.append("file", newFile);
-        formData.append("alt_text", trimmed);
-        const res = await fetch(`/api/admin/photos/${editingPhoto.id}`, {
-          method: "PATCH",
-          body: formData,
-        });
-        if (!res.ok) {
-          setEditError("La modification a échoué. Veuillez réessayer.");
-          setIsEditSaving(false);
-          return;
-        }
         const data = await res.json() as { blob_url?: string };
         updatedBlobUrl = data.blob_url ?? editingPhoto.blob_url;
-      } else {
-        const res = await fetch(`/api/admin/photos/${editingPhoto.id}`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ alt_text: trimmed }),
-        });
-        if (!res.ok) {
-          setEditError("La modification a échoué. Veuillez réessayer.");
-          setIsEditSaving(false);
-          return;
-        }
       }
 
       setPhotos((prev) =>
