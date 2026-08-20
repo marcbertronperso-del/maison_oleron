@@ -164,8 +164,8 @@ describe("getPricePerNight", () => {
     expect(getPricePerNight("2025-08-02")).toBe(230);
   });
 
-  it("July → 150 EUR", () => {
-    expect(getPricePerNight("2025-07-05")).toBe(150);
+  it("July → 220 EUR", () => {
+    expect(getPricePerNight("2025-07-05")).toBe(220);
   });
 
   it("June → 100 EUR", () => {

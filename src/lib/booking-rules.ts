@@ -56,12 +56,12 @@ export function getAvailableStartDates(month: number): StartDateRule {
 
 /**
  * Price per night in EUR based on arrival month.
- * August: 230 | July: 150 | June: 100 | other months: 80
+ * August: 230 | July: 220 | June: 100 | other months: 80
  */
 export function getPricePerNight(date: string): number {
   const m = monthOf(date);
   if (m === 8) return 230;
-  if (m === 7) return 150;
+  if (m === 7) return 220;
   if (m === 6) return 100;
   return 80;
 }
