@@ -104,8 +104,8 @@ describe("getDiscountRate", () => {
     expect(getDiscountRate("2025-07-05", "2025-07-19")).toBe(0.15);
   });
 
-  it("14 nights in August → 0.15", () => {
-    expect(getDiscountRate("2025-08-02", "2025-08-16")).toBe(0.15);
+  it("14 nights in August → 0 (no discount in August)", () => {
+    expect(getDiscountRate("2025-08-02", "2025-08-16")).toBe(0);
   });
 
   it("14 nights cross-month Jul→Aug → 0.15", () => {
@@ -118,6 +118,10 @@ describe("getDiscountRate", () => {
 
   it("7 nights in July → 0 (< 14 nights)", () => {
     expect(getDiscountRate("2025-07-05", "2025-07-12")).toBe(0);
+  });
+
+  it("21 nights in August → 0 (no discount in August)", () => {
+    expect(getDiscountRate("2025-08-02", "2025-08-23")).toBe(0);
   });
 
   it("14 nights in June → 0 (not high season)", () => {
@@ -156,8 +160,8 @@ describe("getAvailableStartDates", () => {
 });
 
 describe("getPricePerNight", () => {
-  it("August → 200 EUR", () => {
-    expect(getPricePerNight("2025-08-02")).toBe(200);
+  it("August → 230 EUR", () => {
+    expect(getPricePerNight("2025-08-02")).toBe(230);
   });
 
   it("July → 150 EUR", () => {

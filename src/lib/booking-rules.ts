@@ -36,10 +36,10 @@ export function isValidBookingPeriod(arrival: string, departure: string): boolea
 
 /**
  * Returns 0.15 (15 % off) for stays of 2+ consecutive weeks arriving in
- * July or August; 0 otherwise.
+ * July; 0 otherwise. No discount in August.
  */
 export function getDiscountRate(arrival: string, departure: string): number {
-  if (!isHighSeason(arrival)) return 0;
+  if (monthOf(arrival) !== 7) return 0;
   const nights = Math.round((toUTCMs(departure) - toUTCMs(arrival)) / MS_PER_DAY);
   return nights >= 14 ? 0.15 : 0;
 }
@@ -56,11 +56,11 @@ export function getAvailableStartDates(month: number): StartDateRule {
 
 /**
  * Price per night in EUR based on arrival month.
- * August: 200 | July: 150 | June: 100 | other months: 80
+ * August: 230 | July: 150 | June: 100 | other months: 80
  */
 export function getPricePerNight(date: string): number {
   const m = monthOf(date);
-  if (m === 8) return 200;
+  if (m === 8) return 230;
   if (m === 7) return 150;
   if (m === 6) return 100;
   return 80;
