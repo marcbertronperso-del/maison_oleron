@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { cn } from "~/lib/utils";
-import { getPricePerNight, getDiscountRate } from "~/lib/booking-rules";
+import { getStaySubtotal, getDiscountRate } from "~/lib/booking-rules";
 import { countNights } from "~/lib/pricing";
 import { MS_PER_DAY, toUTCMs } from "~/lib/date-utils";
 
@@ -36,7 +36,6 @@ function addDays(dateISO: string, days: number): string {
 
 interface Breakdown {
   nights: number;
-  pricePerNight: number;
   subtotal: number;
   discountRate: number;
   discountAmount: number;
@@ -48,8 +47,7 @@ interface Breakdown {
 
 function computeBreakdown(start: string, end: string): Breakdown {
   const nights = countNights(start, end);
-  const pricePerNight = getPricePerNight(start);
-  const subtotal = nights * pricePerNight;
+  const subtotal = getStaySubtotal(start, end);
   const discountRate = getDiscountRate(start, end);
   const discountAmount = Math.round(subtotal * discountRate);
   const total = subtotal - discountAmount;
@@ -58,7 +56,6 @@ function computeBreakdown(start: string, end: string): Breakdown {
   const balanceDeadline = addDays(start, -30);
   return {
     nights,
-    pricePerNight,
     subtotal,
     discountRate,
     discountAmount,
@@ -108,8 +105,7 @@ function BreakdownContent({ bd, start, end, onBook, isBooking }: BreakdownConten
       <div className="space-y-2 text-sm">
         <div className="flex justify-between gap-2">
           <span className="text-muted-foreground">
-            {bd.nights}&nbsp;nuit{bd.nights > 1 ? "s" : ""}{" "}
-            × {formatEUR(bd.pricePerNight)}
+            {bd.nights}&nbsp;nuit{bd.nights > 1 ? "s" : ""}
           </span>
           <span className="text-foreground">{formatEUR(bd.subtotal)}</span>
         </div>

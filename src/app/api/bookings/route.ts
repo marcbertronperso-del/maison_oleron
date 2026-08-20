@@ -3,7 +3,7 @@ import { z } from "zod";
 import { and, eq, gt, lt, ne } from "drizzle-orm";
 import { db } from "~/server/db";
 import { bookings, slotHolds } from "~/server/db/schema";
-import { isValidBookingPeriod, getPricePerNight, getDiscountRate } from "~/lib/booking-rules";
+import { isValidBookingPeriod, getStaySubtotal, getDiscountRate } from "~/lib/booking-rules";
 import { countNights } from "~/lib/pricing";
 import { sendTenantBookingRequestEmail, sendAdminNewRequestEmail } from "~/lib/email";
 
@@ -50,14 +50,12 @@ export async function POST(req: NextRequest) {
   let nights: number;
   let totalPriceCents: number;
   let depositAmountCents: number;
-  let pricePerNight: number;
   let subtotalCents: number;
   let discountCents: number;
 
   try {
     nights = countNights(arrivalDate, departureDate);
-    pricePerNight = getPricePerNight(arrivalDate);
-    subtotalCents = nights * pricePerNight * 100;
+    subtotalCents = getStaySubtotal(arrivalDate, departureDate) * 100;
     const discountRate = getDiscountRate(arrivalDate, departureDate);
     discountCents = Math.round(subtotalCents * discountRate);
     totalPriceCents = subtotalCents - discountCents;
@@ -133,7 +131,6 @@ export async function POST(req: NextRequest) {
       arrivalDate,
       departureDate,
       nights,
-      pricePerNight,
       subtotalCents,
       discountCents,
       totalPriceCents,

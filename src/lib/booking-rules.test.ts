@@ -4,6 +4,7 @@ import {
   getDiscountRate,
   getAvailableStartDates,
   getPricePerNight,
+  getStaySubtotal,
 } from "~/lib/booking-rules";
 
 // 2025 calendar reference (verified Saturdays):
@@ -100,28 +101,20 @@ describe("isValidBookingPeriod — off-season", () => {
 });
 
 describe("getDiscountRate", () => {
-  it("14 nights in July → 0.15", () => {
-    expect(getDiscountRate("2025-07-05", "2025-07-19")).toBe(0.15);
+  it("14 nights in July → 0 (discount removed)", () => {
+    expect(getDiscountRate("2025-07-05", "2025-07-19")).toBe(0);
   });
 
-  it("14 nights in August → 0 (no discount in August)", () => {
+  it("14 nights in August → 0 (discount removed)", () => {
     expect(getDiscountRate("2025-08-02", "2025-08-16")).toBe(0);
   });
 
-  it("14 nights cross-month Jul→Aug → 0.15", () => {
-    expect(getDiscountRate("2025-07-26", "2025-08-09")).toBe(0.15);
+  it("14 nights cross-month Jul→Aug → 0", () => {
+    expect(getDiscountRate("2025-07-26", "2025-08-09")).toBe(0);
   });
 
-  it("21 nights in July → 0.15 (>= 14 qualifies)", () => {
-    expect(getDiscountRate("2025-07-05", "2025-07-26")).toBe(0.15);
-  });
-
-  it("7 nights in July → 0 (< 14 nights)", () => {
-    expect(getDiscountRate("2025-07-05", "2025-07-12")).toBe(0);
-  });
-
-  it("21 nights in August → 0 (no discount in August)", () => {
-    expect(getDiscountRate("2025-08-02", "2025-08-23")).toBe(0);
+  it("21 nights in July → 0", () => {
+    expect(getDiscountRate("2025-07-05", "2025-07-26")).toBe(0);
   });
 
   it("14 nights in June → 0 (not high season)", () => {
@@ -186,5 +179,26 @@ describe("getPricePerNight", () => {
 
   it("January → 80 EUR (off-season)", () => {
     expect(getPricePerNight("2025-01-15")).toBe(80);
+  });
+});
+
+describe("getStaySubtotal", () => {
+  it("7 nights fully in July → 7 × 220", () => {
+    expect(getStaySubtotal("2025-07-05", "2025-07-12")).toBe(7 * 220);
+  });
+
+  it("7 nights fully in August → 7 × 230", () => {
+    expect(getStaySubtotal("2025-08-09", "2025-08-16")).toBe(7 * 230);
+  });
+
+  it("cross-month Jul→Aug: prices each night individually, not arrival-day rate × nights", () => {
+    // 2025-07-26 (Sat) → 2025-08-09 (Sat): 6 nights in July + 8 nights in August
+    const subtotal = getStaySubtotal("2025-07-26", "2025-08-09");
+    expect(subtotal).toBe(6 * 220 + 8 * 230);
+    expect(subtotal).not.toBe(14 * 220); // the arrival-day-rate bug
+  });
+
+  it("1 night → single night's price", () => {
+    expect(getStaySubtotal("2025-06-01", "2025-06-02")).toBe(100);
   });
 });

@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
 import { db } from "~/server/db";
 import { slotHolds } from "~/server/db/schema";
-import { getPricePerNight, getDiscountRate } from "~/lib/booking-rules";
+import { getStaySubtotal, getDiscountRate } from "~/lib/booking-rules";
 import { countNights } from "~/lib/pricing";
 import { MS_PER_DAY, toUTCMs } from "~/lib/date-utils";
 import { cn } from "~/lib/utils";
@@ -105,8 +105,7 @@ export default async function ReserverRecapPage({
   } = hold;
 
   const nights = countNights(arrivalDate, departureDate);
-  const pricePerNight = getPricePerNight(arrivalDate);
-  const subtotal = nights * pricePerNight;
+  const subtotal = getStaySubtotal(arrivalDate, departureDate);
   const discountRate = getDiscountRate(arrivalDate, departureDate);
   const discountAmount = Math.round(subtotal * discountRate);
   const total = subtotal - discountAmount;
@@ -158,7 +157,7 @@ export default async function ReserverRecapPage({
           <div className="space-y-2 text-sm">
             <div className="flex justify-between gap-2">
               <span className="text-muted-foreground">
-                {nights}&nbsp;nuit{nights > 1 ? "s" : ""}&nbsp;×&nbsp;{formatEUR(pricePerNight)}
+                {nights}&nbsp;nuit{nights > 1 ? "s" : ""}
               </span>
               <span className="text-foreground">{formatEUR(subtotal)}</span>
             </div>

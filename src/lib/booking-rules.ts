@@ -35,13 +35,10 @@ export function isValidBookingPeriod(arrival: string, departure: string): boolea
 }
 
 /**
- * Returns 0.15 (15 % off) for stays of 2+ consecutive weeks arriving in
- * July; 0 otherwise. No discount in August.
+ * No long-stay discount currently applies (removed for both July and August).
  */
-export function getDiscountRate(arrival: string, departure: string): number {
-  if (monthOf(arrival) !== 7) return 0;
-  const nights = Math.round((toUTCMs(departure) - toUTCMs(arrival)) / MS_PER_DAY);
-  return nights >= 14 ? 0.15 : 0;
+export function getDiscountRate(_arrival: string, _departure: string): number {
+  return 0;
 }
 
 export type StartDateRule = "saturday-only" | "any-day";
@@ -55,7 +52,7 @@ export function getAvailableStartDates(month: number): StartDateRule {
 }
 
 /**
- * Price per night in EUR based on arrival month.
+ * Price per night in EUR based on the night's own month.
  * August: 230 | July: 220 | June: 100 | other months: 80
  */
 export function getPricePerNight(date: string): number {
@@ -64,4 +61,21 @@ export function getPricePerNight(date: string): number {
   if (m === 7) return 220;
   if (m === 6) return 100;
   return 80;
+}
+
+/**
+ * Total stay price in EUR: sums each individual night's price rather than
+ * multiplying nights by the arrival night's rate, so cross-month stays
+ * (e.g. arriving in July, departing in August) are priced correctly.
+ */
+export function getStaySubtotal(arrival: string, departure: string): number {
+  const arrivalMs = toUTCMs(arrival);
+  const departureMs = toUTCMs(departure);
+  let total = 0;
+  for (let ms = arrivalMs; ms < departureMs; ms += MS_PER_DAY) {
+    const d = new Date(ms);
+    const iso = `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}-${String(d.getUTCDate()).padStart(2, "0")}`;
+    total += getPricePerNight(iso);
+  }
+  return total;
 }

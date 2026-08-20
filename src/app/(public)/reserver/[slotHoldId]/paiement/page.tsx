@@ -2,8 +2,7 @@ import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
 import { db } from "~/server/db";
 import { slotHolds } from "~/server/db/schema";
-import { getPricePerNight, getDiscountRate } from "~/lib/booking-rules";
-import { countNights } from "~/lib/pricing";
+import { getStaySubtotal, getDiscountRate } from "~/lib/booking-rules";
 import { env } from "~/env.js";
 import { TunnelPaiementForm } from "~/components/booking/TunnelPaiementForm";
 
@@ -24,9 +23,7 @@ export default async function PaiementPage({
     redirect("/#disponibilites");
   }
 
-  const nights = countNights(hold.arrival_date, hold.departure_date);
-  const pricePerNight = getPricePerNight(hold.arrival_date);
-  const subtotal = nights * pricePerNight;
+  const subtotal = getStaySubtotal(hold.arrival_date, hold.departure_date);
   const discountRate = getDiscountRate(hold.arrival_date, hold.departure_date);
   const discountAmount = Math.round(subtotal * discountRate);
   const total = subtotal - discountAmount;

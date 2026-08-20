@@ -241,7 +241,6 @@ export interface BookingRequestEmailData {
   arrivalDate: string;
   departureDate: string;
   nights: number;
-  pricePerNight: number;
   subtotalCents: number;
   discountCents: number;
   totalPriceCents: number;
@@ -289,7 +288,7 @@ function buildTenantRequestHtml(data: BookingRequestEmailData): string {
           <hr style="border:none;border-top:1px solid #e5ddd0;margin:0;">
         </td></tr>
         <tr>
-          <td style="padding:6px 0;color:#8b7355;font-size:13px;">${data.nights} nuits × ${formatEUR(data.pricePerNight * 100)}</td>
+          <td style="padding:6px 0;color:#8b7355;font-size:13px;">${data.nights} nuits</td>
           <td style="padding:6px 0;color:#2d2011;text-align:right;">${formatEUR(data.subtotalCents)}</td>
         </tr>
         ${data.discountCents > 0 ? `<tr>
